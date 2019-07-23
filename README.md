@@ -4,9 +4,10 @@ A efficent neural network concept for the c-family
 Supported language: C#, CPP, JAVA
 
 
-#
-#
-#
+//
+//
+
+
 
 
 
