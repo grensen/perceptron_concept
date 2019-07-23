@@ -1,4 +1,4 @@
-# perceptron_concept
+# The Perceptron Concept (Or All Is A Perceptron Concept)
 # A efficent neural network concept for the c-family
 # Supported language: C#, CPP, JAVA
 
