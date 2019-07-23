@@ -25,8 +25,15 @@ Feed Forward (FF) and Backpropagation (BP) treat the current neuron in FF and th
 The same thing with the gradient, here the step is a little bit trickier, because the gradient calculation treats the output neurons with (target - output) in a different way as the hidden neurons, where the gradient is the sum of the products from the gradients on the layer before times their own weights.
 
 
+The concept consists of a heart that is the same in every language. The other part is language specific.
+More specifically, the whole training code, except for the function of the filestream, is the same in all languages.
+Also arrays, math functions, print functions and some include stuff need special attention for every language, but that was it.
+The complicated algorithms can be easily ported.
 
+Requirement for the demo code in every language is the unzipped MNIST dataset, I would prefer 7zip for this work, the default path for the dataset is "C:\mnist\", one language was bleating, so I was taking a folder. In the demo the trainingset with their label are activ. 
+That includes a total of 60,000 images and their labels. This results in a maximum number of 60,000 training examples that must not be exceeded.
 
+On the picture below you can see the identical results in C#, CPP and JAVA.
 ![alt text](https://user-images.githubusercontent.com/53048236/61723001-99813b00-ad6b-11e9-81ea-aaa683a98b4f.png)
 
 check
