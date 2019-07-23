@@ -31,4 +31,10 @@ The same thing with the gradient, here the step is a little bit trickier, becaus
 
 check
 
+![WP_20190301_16_42_26_Pro](https://user-images.githubusercontent.com/53048236/61751742-a45ac080-ada9-11e9-9fdb-f5fcf7724155.jpg)
+
+c2
+
+
+
 ![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
