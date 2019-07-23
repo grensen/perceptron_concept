@@ -24,8 +24,7 @@ is to understand why the j index need to be initialized with the size of the inp
 Feed Forward (FF) and Backpropagation (BP) treat the current neuron in FF and the gradient in the BP excatly in the same way, forward and backward. This means FF needs the products of their neurons times their weights and optionally the bias, then we got the netinput and the neuron can be activated.
 The same thing with the gradient, here the step is a little bit trickier, because the gradient calculation treats the output neurons with (target - output) in a different way as the hidden neurons, where the gradient is the sum of the products from the gradients on the layer before times their own weights.
 
-
-On the picture below you can see the identical results in C#, CPP and JAVA.
+On the picture below you can see the identical results in C#, CPP and JAVA. JAVA was tested with Eclipse, C#  and CPP with Vsial Studio 2017.
 
 ![alt text](https://user-images.githubusercontent.com/53048236/61723001-99813b00-ad6b-11e9-81ea-aaa683a98b4f.png)
 
