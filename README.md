@@ -28,3 +28,7 @@ The same thing with the gradient, here the step is a little bit trickier, becaus
 
 
 ![alt text](https://user-images.githubusercontent.com/53048236/61723001-99813b00-ad6b-11e9-81ea-aaa683a98b4f.png)
+
+check
+
+![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
