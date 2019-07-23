@@ -1,5 +1,5 @@
 # The Perceptron Concept (Or All Is A Perceptron Concept)
-# A efficent neural network concept for the C-Family
+# An efficent neural network concept for the C-Family
 # Supported language: C#, CPP, JAVA
 
 The u[] array describes the network, I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
