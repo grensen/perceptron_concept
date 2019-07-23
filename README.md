@@ -4,8 +4,8 @@
 
 The u[] array describes the network, I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
 
-The demo NN_001 for each language uses a { 784, 25, 25, 25, 10 } NN and as inputs the MNIST data comes in, 
-to make everything comparable, the network works with pseudo random values. 
+The demo NN_001 for each language uses a { 784, 25, 25, 25, 10 } NN and as inputs the MNIST data comes in.
+To make everything comparable, the network works with pseudo random values. 
 Rectified linear units (ReLU) are used as an activation function,
 and the output neurons are activated with softmax and cross entropy loss.
 The quick demo also supports batch, mini-batch and stochastic gradient descent (SGD). 
@@ -17,7 +17,7 @@ so the weight init works only with one hyperparameter, thus.
 A special feature ist the bounce restriction method.
 The method in the trivial form is simpel, if a delta^2 breach the limit, the network waits till the delta is cooling down before the NN updates the weight again, but the weight itself continues to work in the network all the time. This makes the NN much more robust.
 
-With the perceptron concept its possible to use only one array for every value. The data will be updated just in time.
+With the perceptron concept its possible to use only one array for every value. Every data will be updated just in time.
 The biggest step to understand the concept in addition to the understanding of how a perceptron works, 
 is to understand why the j index need to be initialized with the size of the input neurons.
 
@@ -36,11 +36,16 @@ The complicated algorithms can be easily ported.
 Requirement for the demo code in every language is the unzipped MNIST dataset, I would prefer 7zip for this work, the default path for the dataset is "C:\mnist\", one language was bleating, so I was taking a folder. In the demo the trainingset with their label are activ. 
 That includes a total of 60,000 images and their labels. This results in a maximum number of 60,000 training examples that must not be exceeded.
 
-check
+
+And so I've explained the concept myself, ignore the math, here I was using (Output - Target) which is just as possible.
 
 ![WP_20190301_16_42_26_Pro](https://user-images.githubusercontent.com/53048236/61751742-a45ac080-ada9-11e9-9fdb-f5fcf7724155.jpg)
 
-c2
+All neurons, input, hidden and output neurons are in the neuron[] array, the green part shows the FF process, the red part shows the BP and the weight update in gold shows which part from FF and BP it needs.
+
+Ok ok, step by step, because the steps are the key. With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a picture with three pixels for the reference example.
+
+All the pixel need to connect to the first neuron on the next layer, this process repeats until the last neuron on the current layer is activated. The algorithm repeats this till the output neurons, thats a special case because we dont activate the output neurons with Relu! So we just let them pass on the outputlayer with neuron 18 and 19.
 
 
 
