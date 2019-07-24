@@ -46,7 +46,7 @@ public class NN_001 {
         	
            //+----------- 1. MNIST as Inputs --------------------------------------+      
             for (int n = 0; n < inputs; ++n)
-              neuron[n] =  img.read() / 255.0f;
+              neuron[n] = img.read() / 255.0f;
             int targetNum = lbl.read();
 
            //+----------- 2. Feed Forward -----------------------------------------+            
