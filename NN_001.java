@@ -1,7 +1,5 @@
 package perceptron_concept;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -9,7 +7,8 @@ public class NN_001 {
 
 	public static void main(String[] args) throws IOException {
 		
-	 System.out.println("running...");
+	 System.out.println("running...\n");
+
         //--- create neural network 
          int[] u               = { 784, 25, 25, 25, 10 };
          float learningRate    = 0.0067f;
@@ -40,7 +39,7 @@ public class NN_001 {
         
 	//--- get pseudo random init weights
          for (int n = 0, p = 314; n < wnn; n++)
-          weight[n] = (float)((p = p * 2718 % 2718281) / (2718281.0 * Math.E * Math.PI * weightInitRange));
+             weight[n] = (float)((p = p * 2718 % 2718281) / (2718281.0 * Math.E * Math.PI * weightInitRange));
 
         //--- start training
          for (int x = 1; x < runs + 1; x++){
@@ -76,7 +75,7 @@ public class NN_001 {
             ce2 = (ce -= (float) Math.log(neuron[outMaxPos])) / x;                
          
            //+----------- 5. Backpropagation --------------------------------------+    
-            target[targetNum] = 1;
+            target[targetNum] = 1.0f;
             for (int i = dnn, j = nns - 1, ls = output, wd = wnn - 1, ws = wd, us = nns - output - 1, gs = nns - inputs - 1;
             i != 0; i--, wd -= u[i + 1] * u[i + 0], us -= u[i], gs -= u[i + 1])
                 for (int k = 0; k != u[i]; k++, j--){
@@ -84,10 +83,10 @@ public class NN_001 {
                    //--- first check if output or hidden, calc delta for both
                     if (i == dnn)
                         gra = target[--ls] - neuron[j];
-                    else if(neuron[j] > 0) // math version 
+                    else if(neuron[j] > 0)
                         for (int n = gs + u[i + 1]; n > gs; n--, ws--)
                             gra += weight[ws] * gradient[n];
-                    else ws -= u[i + 1]; // math version
+                    else ws -= u[i + 1];
                     for (int n = us, w = wd - k; n > us - u[i - 1]; w -= u[i], n--)
                         delta[w] += gra * neuron[n];
                     gradient[j - inputs] = gra;
@@ -109,8 +108,7 @@ public class NN_001 {
             	System.out.println("runs: " + x + " accuracy: " + (correct * 100.0f / x));
          } //--- runs end
 
-         System.out.println("");
-         System.out.println("neurons: " + nns + " weights: " + wnn + " batch: " + miniBatch);
+         System.out.println("\nneurons: " + nns + " weights: " + wnn + " batch: " + miniBatch);
          System.out.println("accuracy: " + (correct * 100.0 / (runs * 1.0f)) + " cross entropy: " + ce2);
          System.out.println("correct: "+(correct) + " incorrect: " + (runs - correct));
          
