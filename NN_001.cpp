@@ -54,7 +54,7 @@ int main()
 	       //+----------- 1. MNIST as Inputs --------------------------------------+      
 		for (int n = 0; n < inputs; ++n)
 		{
-			byte pixel = 0; // read one byte (0-255 color value of the pixel)
+			byte pixel = 0;
 			ig.read((char*)&pixel, 1);		
 			neuron[n] = pixel / 255.0f;
 		 }
@@ -100,10 +100,10 @@ int main()
 				//--- first check if output or hidden, calc delta for both
 				if (i == dnn)
 					gra = target[--ls] - neuron[j];
-				else if (neuron[j] > 0) // math version 
+				else if (neuron[j] > 0) 
 					for (int n = gs + u[i + 1]; n > gs; n--, ws--)
 						gra += weight[ws] * gradient[n];
-				else ws -= u[i + 1]; // math version
+				else ws -= u[i + 1]; 
 				for (int n = us, w = wd - k; n > us - u[i - 1]; w -= u[i], n--)
 					delta[w] += gra * neuron[n];
 				gradient[j - inputs] = gra;
