@@ -90,10 +90,10 @@ namespace NN_001
                            //--- first check if output or hidden, calc delta for both connected weights
                             if (i == dnn)
                                 gra = target[--ls] - neuron[j];
-                            else if(neuron[j] > 0) // math version
+                            else if(neuron[j] > 0) 
                                 for (int n = gs + u[i + 1]; n > gs; n--, wg--)
                                     gra += weight[wg] * gradient[n];
-                            else wg -= u[i + 1]; // math version
+                            else wg -= u[i + 1]; 
                             for (int n = us, w = wd - k; n > us - u[i - 1]; w -= u[i], n--)
                                 delta[w] += gra * neuron[n];
                             gradient[j - inputs] = gra;
