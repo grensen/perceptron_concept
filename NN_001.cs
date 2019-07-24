@@ -10,6 +10,7 @@ namespace NN_001
             try
             {
                 Console.WriteLine("running...\n");
+                
                //--- create neural network 
                 int[] u               = { 784, 25, 25, 25, 10 };
                 float learningRate    = 0.0067f;
