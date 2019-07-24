@@ -15,7 +15,8 @@ using namespace std;
 int main()
 {
 	std::cout << "running..." << endl << endl;
-   //--- create neural network 
+
+       //--- create neural network 
 	int u[]               = { 784, 25, 25, 25, 10 };
 	float learningRate    = 0.0067f;
 	float bounceResRate   = 50.0f;
@@ -41,27 +42,27 @@ int main()
 	
 	ig.seekp(16 * sizeof(char));
 	lab.seekp(8 * sizeof(char));
-
-        //--- get pseudo random init weights
+	
+       //--- get pseudo random init weights
 	for (int n = 0, p = 314; n < wnn; n++)
 		weight[n] = (float)((p = p * 2718 % 2718281) / (2718281.0 * M_E * M_PI * weightInitRange));
 
-        //--- start training
+       //--- start training
 	for (int x = 1; x < runs + 1; x++) 
 	{
 
-		//+----------- 1. MNIST as Inputs --------------------------------------+      
+	       //+----------- 1. MNIST as Inputs --------------------------------------+      
 		for (int n = 0; n < inputs; ++n)
 		{
-			byte pixel = 0;
+			byte pixel = 0; // read one byte (0-255 color value of the pixel)
 			ig.read((char*)&pixel, 1);		
-			neuron[n] = pixel / 255.0f; 
+			neuron[n] = pixel / 255.0f;
 		 }
 		byte label = 0;
 		lab.read((char*)&label, sizeof(label));
-		int targetNum = (int)label; //lbl.read();
+		int targetNum = label; 
 
-		//+----------- 2. Feed Forward -----------------------------------------+            
+	   //+----------- 2. Feed Forward -----------------------------------------+            
 		for (int i = 0, j = inputs, t = 0, w = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1])
 			for (int k = 0; k < u[i + 1]; k++, j++)
 			{
@@ -71,24 +72,25 @@ int main()
 				neuron[j] = i == dnn - 1 ? net : net > 0 ? net : 0;
 			}//--- k ends    
 
-			 //+------------ 3. NN prediction ---------------------------------------+
+	       //+------------ 3. NN prediction ---------------------------------------+
 		int outMaxPos = nns - output;
 		float outMaxVal = neuron[nns - output], scale = 0;
 		for (int i = nns - output + 1; i < nns; i++)
 			if (neuron[i] > outMaxVal) 
 			{
-			    outMaxPos = i; outMaxVal = neuron[i];
+				outMaxPos = i; 
+				outMaxVal = neuron[i];
 			}
 		if (targetNum + nns - output == outMaxPos) correct++;
 
-		//+----------- 4. Loss / Error with Softmax and Cross Entropy ----------+                    
+	       //+----------- 4. Loss / Error with Softmax and Cross Entropy ----------+                    
 		for (int n = nns - output; n != nns; n++)
 			scale += exp(neuron[n] - outMaxVal);
 		for (int n = nns - output, m = 0; n != nns; m++, n++)
 			neuron[n] = exp(neuron[n] - outMaxVal) / scale;
 		ce2 = (ce -= log(neuron[outMaxPos])) / x;
 
-		//+----------- 5. Backpropagation --------------------------------------+    
+	       //+----------- 5. Backpropagation --------------------------------------+    
 		target[targetNum] = 1.0f;
 		for (int i = dnn, j = nns - 1, ls = output, wd = wnn - 1, ws = wd, us = nns - output - 1, gs = nns - inputs - 1;
 			i != 0; i--, wd -= u[i + 1] * u[i + 0], us -= u[i], gs -= u[i + 1])
@@ -108,7 +110,7 @@ int main()
 			}
 		target[targetNum] = 0;
 
-		//+----------- 6. update Weights ----------------------------------------+         
+	       //+----------- 6. update Weights ----------------------------------------+         
 		if ((x % miniBatch == 0) || (x == runs - 1)) 
 		{
 			for (int m = 0; m < wnn; m++) 
@@ -125,12 +127,13 @@ int main()
 			std::cout << "runs: " << x << " accuracy: " << (correct * 100.0f / x) << endl;
 	} //--- runs end
 
-	std::cout << "" << endl;
-	std::cout << "neurons:  " << nns << " weights: " << wnn << " batch: " << miniBatch << endl;
+	std::cout << endl << "neurons:  " << nns << " weights: " << wnn << " batch: " << miniBatch << endl;
 	std::cout << "accuracy: " << (correct * 100.0 / (runs * 1.0f)) << " cross entropy: " << ce2 << endl;
 	std::cout << "correct: " << (correct) << " incorrect: " << (runs - correct) << endl;
-	//fcloseall();
+	
+	ig.close();lab.close();
 
 	std::system("pause");
-    return 0;
+   
+   return 0;
 }
