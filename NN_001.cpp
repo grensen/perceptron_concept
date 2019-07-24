@@ -62,7 +62,7 @@ int main()
 		lab.read((char*)&label, sizeof(label));
 		int targetNum = label; 
 
-	   //+----------- 2. Feed Forward -----------------------------------------+            
+	       //+----------- 2. Feed Forward -----------------------------------------+            
 		for (int i = 0, j = inputs, t = 0, w = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1])
 			for (int k = 0; k < u[i + 1]; k++, j++)
 			{
