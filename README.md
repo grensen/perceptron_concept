@@ -17,7 +17,7 @@ so the weight init works only with one hyperparameter, thus.
 A special feature ist the bounce restriction method.
 The method in the trivial form is simpel, if a delta^2 breach the limit, the network waits till the delta is cooling down before the NN updates the weight again, but the weight itself continues to work in the network all the time. This makes the NN much more robust.
 
-With the perceptron concept its possible to use only one array for every value. Every data will be updated just in time.
+With the perceptron concept its possible to use only one array for every neuron. Every data will be updated just in time.
 The biggest step to understand the concept in addition to the understanding of how a perceptron works, 
 is to understand why the j index need to be initialized with the size of the input neurons.
 
