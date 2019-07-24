@@ -39,7 +39,7 @@ That includes a total of 60,000 images and their labels. This results in a maxim
 
 And so I've explained the concept myself, ignore the math, here I was using (Output - Target) which is just as possible.
 
-![WP_20190301_16_42_26_Pro](https://user-images.githubusercontent.com/53048236/61751742-a45ac080-ada9-11e9-9fdb-f5fcf7724155.jpg)
+![WP_20190423_00_35_17_Pro](https://user-images.githubusercontent.com/53048236/61755635-ca3b9180-adb8-11e9-99a6-adfce47950a5.jpg)
 
 All neurons, input, hidden and output neurons are in the neuron[] array, the green part shows the FF process, the red part shows the BP and the weight update in gold shows which part from FF and BP it needs.
 
