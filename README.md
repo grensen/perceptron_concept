@@ -56,24 +56,39 @@ So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) 
 In pseudo it could look like this for FF:
 
 dnn = u.len // = 4 on the reference
+
 inputs = u[0]
+
 output = u[dnn]
+
 nns = sumUp(u) *Size of the neurons is the sum of u[] = 3+5+5+5+2 = 20*
+
 wnn = sumProducts(u) *Size of weights is the sum of the products from the layer 3*5+5*5+5*5+5*2 = 75*
+
 *the gradient, bias and netinput index is just the (nns-inputs), as example I added a bias for the FF*
 
-/*every layer i in the network = 4*/
+*every layer i in the network = 4*
+
 // for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1]) 
-/*every activation neuron k in the network steps with u[i] = (5,5,5,2)*/
+
+/every activation neuron k in the network steps with u[i] = (5,5,5,2)*
+
 //    for (int k = 0; k < u[i+1]; j++, k++)
+
 //       net = bias[j-inputs]
-/*every weight and n neuron in the network*/
+
+*every weight and n neuron in the network*
+
 //       for (every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;t<t+u[i+1]; n++, m+=u[i+1])
+
 //          net += neuron[n] * weight[m]
 
 //       if(net more then 0 (relu) or i is outputlayer (output for softmax))
+
 //           neuron[j] = net
+
 //       else
+
 //           neuron[j] = 0
 
 Here is a visualisation of the process:
