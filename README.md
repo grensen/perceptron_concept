@@ -41,12 +41,27 @@ And so I've explained the concept myself, ignore the math, here I was using (Out
 
 ![WP_20190423_00_35_17_Pro](https://user-images.githubusercontent.com/53048236/61755635-ca3b9180-adb8-11e9-99a6-adfce47950a5.jpg)
 
-All neurons, input, hidden and output neurons are in the neuron[] array, the green part shows the FF process, the red part shows the BP and the weight update in gold shows which part from FF and BP it needs.
+Let's focus on the green index on the Image, input, hidden and output neurons are in only one array, the neuron[], so the network uses one index for all neurons. And here we have to talk about the j index, thats not the whole index, because j is the activation index after the inputs and starts on the first neuron with index 0 on hidden layer 1. So lets talk about the gradient array in red, which starts with index 0 on the green index position 3, these is the index for the gradient[], but it's also the index for the bias[], or the netinput[] we dont need in this concept. 
 
-Ok ok, step by step, because the steps are the key. With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a picture with three pixels for the reference example.
+To realize the idea we need three loops, the outer i loop for the layer, then the middel k loop for every neuron we need to activate for our output operations, and the inner n loop for the input neurons and every weight, to calc the products we add to the net variable after we leave the n loop.
 
-All the pixel need to connect to the first neuron on the next layer, this process repeats until the last neuron on the current layer is activated. The algorithm repeats this till the output neurons, thats a special case because we dont activate the output neurons with Relu! So we just let them pass on the outputlayer with neuron 18 and 19.
+Ok ok, step by step, because the steps are the key. Here we watch the NN u[] = {3,5,5,5,2} again, the first step goes from 0 to 3 and represents the input neurons we add to k, the k loop is u[i + 1], because we start with i = 0, and add to the next laxer, so its i + 1 with 5 neurons in this case.
 
+With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a picture with three pixels for the reference example.
+Think about, we add the left side n first with the 3 input neurons with index 0, 1, 2 to the right side on our first output neuron[3] k, till we activate the whole layer h1 with the k neurons, then h1 represent our inputs, and h2 our outputs till we reach the final output layer, here we do not activate the output neurons and just let them pass.
 
+In pseudo it could look like this:
 
+for every layer i in the network 3, 5, 5, 5, 2; int j = inputs, m = 0; // w = weight index for m
+   for every neuron k, start with u[i+1] = steps: 5=5, 5+5 = 10, 10+5 = 15, 15+2 = 17;; j++, k++
+   {
+      net = bias[j-inputs]
+      for every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;; n++, m+=u[i+1]
+         net += neuron[i] * weight[m]
+      if(relu more then 0 or i == outputlayer)
+       neuron[j] = net
+      else
+       neuron[j] = 0
+   }
+   
 ![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
