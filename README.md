@@ -45,7 +45,7 @@ Let's focus on the green index on the Image, input, hidden and output neurons ar
 
 To realize the idea we need three loops, the outer i loop for the layer, then the middel k loop for every neuron we need to activate for our output operations, and the inner n loop for the input neurons and every weight, to calc the products we add to the net variable after we leave the n loop.
 
-Ok ok, step by step, because the steps are the key. Here we watch the NN u[] = {3,5,5,5,2} again, the first step goes from 0 to 3 and represents the input neurons we add to k, the k loop is u[i + 1], because we start with i = 0, and add to the next laxer, so its i + 1 with 5 neurons in this case.
+Ok ok, step by step, because the steps are the key. Here we watch the NN u[] = {3,5,5,5,2} again, the first step goes from 0 to 2 and represents the input neurons we add to k, the k loop is u[i + 1], because we start with i = 0, and add to the next laxer, so its i + 1 with 5 neurons in this case.
 
 With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a picture with three pixels for the reference example.
 Think about, we add the left side n first with the 3 input neurons with index 0, 1, 2 to the right side on our first output neuron[3] k, till we activate the whole layer h1 from 3 to 7 with the k neurons, then h1 represent our inputs, and h2 our outputs till we reach the final output layer, here we do not activate the output neurons and just let them pass.
