@@ -52,17 +52,17 @@ Think about, we add the left side n first with the 3 input neurons with index 0,
 
 In pseudo it could look like this:
 
-// for every layer i in the network 3, 5, 5, 5, 2; int j = inputs, m = 0; // w = weight index for m
+// for (every layer i in the network (3,5,5,5,2), int j=inputs, w=0;; i++) w = global weight index for m
 
-//    for every neuron k, start with u[i+1] = steps: 5=5, 5+5 = 10, 10+5 = 15, 15+2 = 17;; j++, k++
+//    for (every activation neuron k, start with u[i+1] = steps: 5=5, 5+5 = 10, 10+5 = 15, 15+2 = 17;; j++, k++)
 
 //       net = bias[j-inputs]
 
-//       for every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;; n++, m+=u[i+1]
+//       for (every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;; n++, m+=u[i+1])
 
 //          net += neuron[i] * weight[m]
 
-//       if(relu more then 0 or i == outputlayer)
+//       if(net more then 0 (relu) or i == outputlayer (output for softmax))
 
 //        neuron[j] = net
 
