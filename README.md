@@ -70,9 +70,9 @@ In pseudo it could look like this:
 
 //        neuron[j] = 0
 
-Here i visualized thr process:
+Here is a visualisation of the process:
 
-https://www.youtube.com/watch?v=jZgb3-W7BpQ
+![NNvis]https://www.youtube.com/watch?v=jZgb3-W7BpQ
 
 Hope that helps.
    
