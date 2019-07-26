@@ -72,7 +72,8 @@ In pseudo it could look like this:
 
 Here is a visualisation of the process:
 
-![NNvis]https://www.youtube.com/watch?v=jZgb3-W7BpQ
+[Perceptron Concept Visualisation](https://www.youtube.com/watch?v=jZgb3-W7BpQ)
+
 
 Hope that helps.
    
