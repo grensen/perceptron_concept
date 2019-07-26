@@ -63,7 +63,7 @@ output = u[dnn]
 
 nns = sumUp(u) *Size of the neurons is the sum of u[] = 3+5+5+5+2 = 20*
 
-wnn = sumProducts(u) *Size of weights is the sum of the products from the layer 3*5+5*5+5*5+5*2 = 75*
+wnn = sumProducts(u) *Size of weights is the sum of the products from the layer 3 * 5 + 5 * 5 + 5 * 5 + 5 * 2 = 75*
 
 *the gradient, bias and netinput index is just the (nns-inputs), as example I added a bias for the FF*
 
