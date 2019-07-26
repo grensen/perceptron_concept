@@ -60,7 +60,7 @@ In pseudo it could look like this:
 
 //       for (every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;; n++, m+=u[i+1])
 
-//          net += neuron[i] * weight[m]
+//          net += neuron[n] * weight[m]
 
 //       if(net more then 0 (relu) or i == outputlayer (output for softmax))
 
