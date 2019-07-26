@@ -47,28 +47,40 @@ To realize the idea we need three loops, the outer i loop for the layer, then th
 
 Ok ok, step by step, because the steps are the key. Here we watch the NN u[] = {3,5,5,5,2} again, the first step goes from 0 to 2 and represents the input neurons we add to k, the k loop is u[i + 1], because we start with i = 0, and add to the next laxer, so its i + 1 with 5 neurons in this case.
 
-With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a picture with three pixels for the reference example.
-Think about, we add the left side n first with the 3 input neurons with index 0, 1, 2 to the right side on our first output neuron[3] k, till we activate the whole layer h1 from 3 to 7 with the k neurons, then h1 represent our inputs, and h2 our outputs till we reach the final output layer, here we do not activate the output neurons and just let them pass.
+With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a image with three pixels for the reference example.
+Think about, we add the left side n first with the 3 input neurons with index 0, 1, 2 to the right side on our first output neuron[3] k, till we activate the last neuron on the layer h1 from 3 to 7 in the k loop, then if i = 1 h1 represent our inputs, and h2 our outputs till we reach the final output layer, here we do not activate the output neurons and just let them pass.
+
+Some termenology alert, a layer means normaly the connection between the input and their outputs (input * output = layer), but it's also common to name the layer as input, hidden or output. Correctly I would name it connection layer, which need 2 parts.
+So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) i3 = (5 * 2)) which results in 4 layer.
 
 In pseudo it could look like this:
 
-// for (every layer i in the network (3,5,5,5,2), int j=inputs, w=0;; i++) w = global weight index for m
+dnn = u.len // = 4 on the reference
 
-//    for (every activation neuron k, start with u[i+1] = steps: 5=5, 5+5 = 10, 10+5 = 15, 15+2 = 17;; j++, k++)
+inputs = u[0]
 
+output = u[dnn]
+
+/*Size of the neurons is the sum of u[] = 3+5+5+5+2 = 20*/
+nns = sumUp(u)
+
+/*Size of weights is the sum of the products from the layer 3*5+5*5+5*5+5*2 = 75*/
+
+/*the gradient, bias and netinput index is just the (nns-inputs), as example I added a bias for the FF*/
+
+/*every layer i in the network = 4*/
+// for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1]) 
+/*every activation neuron k in the network steps with u[i] = (5,5,5,2)*/
+//    for (int k = 0; k < u[i+1]; j++, k++)
 //       net = bias[j-inputs]
-
-//       for (every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;; n++, m+=u[i+1])
-
+/*every weight and n neuron in the network*/
+//       for (every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;t<t+u[i+1]; n++, m+=u[i+1])
 //          net += neuron[n] * weight[m]
 
-//       if(net more then 0 (relu) or i == outputlayer (output for softmax))
-
-//        neuron[j] = net
-
+//       if(net more then 0 (relu) or i is outputlayer (output for softmax))
+//           neuron[j] = net
 //       else
-
-//        neuron[j] = 0
+//           neuron[j] = 0
 
 Here is a visualisation of the process:
 
