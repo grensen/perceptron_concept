@@ -8,7 +8,7 @@ The demo NN_001 for each language uses a { 784, 25, 25, 25, 10 } NN and as input
 To make everything comparable, the network works with pseudo random values. 
 Rectified linear units (ReLU) are used as an activation function,
 and the output neurons are activated with softmax and cross entropy loss.
-The quick demo also supports batch, mini-batch and stochastic gradient descent (SGD). 
+The quick demo also supports batch, mini-batch and online-trainig / stochastic gradient descent (SGD). 
 
 The weight initialization is a pseudo random function with known numbers. 
 "weightInitRange" set the range of the weights, 0.33 seems a nice start value, 
@@ -69,6 +69,11 @@ In pseudo it could look like this:
 //       else
 
 //        neuron[j] = 0
-   
+
+Here i visualized thr process:
+
+https://www.youtube.com/watch?v=jZgb3-W7BpQ
+
+Hope that helps.
    
 ![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
