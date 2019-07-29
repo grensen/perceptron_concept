@@ -118,8 +118,10 @@ for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i 
          // update weights
 ```
 
- At the end, the understanding of the reference is the key to work with massiv huge networks. 
- 
+At the end, the understanding of the reference is the key to work with massiv huge networks. 
+
+With a good understanding of the indices, its really easy to implement helpful technieques like dropout with nice efficency.
+
 ![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
 
 
