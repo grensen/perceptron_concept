@@ -11,7 +11,7 @@ and the output neurons are activated with softmax and cross entropy loss.
 The quick demo also supports batch, mini-batch and online-trainig / stochastic gradient descent (SGD). 
 
 The weight initialization is a pseudo random function with known numbers. 
-"weightInitRange" set the range of the weights, 0.33 seems a nice start value, 
+"weightInitRange" set the range of the weights, 0.314 seems a nice start value, 
 so the weight init works only with one hyperparameter, thus.
 
 A special feature ist the bounce restriction method.
