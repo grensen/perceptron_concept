@@ -93,12 +93,6 @@ The output layer will be activated with softmax. One special treatment, but only
 
 The hardest part is the backpropagation, here we go just backwards.
 
-Here is a visualisation of the whole process:
-
-[Perceptron Concept Visualisation](https://www.youtube.com/watch?v=jZgb3-W7BpQ)
-
-Hope that helps.
-
 First we check if we are on the output layer, then we calc the gradient with (target - output) and update the deltas for the weights of this gradient. Thats the strongest "just in time" component in this concept, because we dont need more code and resources to handle this operation. If we done with the output, we calc the gradient for the hidden nerurons, and this process ist just the FF, but backwards.
 The loops do not look very attractive, thats true. Instead of the long loops we could use arrays for the steps, that looks sexier, but for the understanding it seems better to show the calc on their place.
 
@@ -116,6 +110,13 @@ for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i 
       for (int n = t; n < t + u[i+1]; n++, m+=u[i+1]) 
          // update weights
 ```
+
+Here is a visualisation of the whole process:
+
+[Perceptron Concept Visualisation](https://www.youtube.com/watch?v=jZgb3-W7BpQ)
+
+Hope that helps.
+
 
 At the end, the understanding of the reference is the key to work with massiv huge networks. 
 
