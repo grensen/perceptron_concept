@@ -57,7 +57,7 @@ So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) 
 
 In pseudo it could look like this for FF:
 ```
-dnn = u.len // = 4 on the reference
+dnn = u.len - 1 // = 4 on the reference
 
 inputs = u[0] // = 3
 
@@ -76,7 +76,7 @@ for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i 
 
       net = bias[j-inputs]
 
-      for (int n = t; n < t + u[i+1]; n++, m+=u[i+1]) // weight
+      for (int n = t; n < t + u[i + 1]; n++, m += u[i + 1]) // weight
 
          net += neuron[n] * weight[m]
 
@@ -107,7 +107,7 @@ Another nice way is to use the FF or BP as a dummy of the 3 loops, remove the ca
 ```
 for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1]) 
    for (int k = 0; k < u[i+1]; j++, k++)
-      for (int n = t; n < t + u[i+1]; n++, m+=u[i+1]) 
+      for (int n = t; n < t + u[i+1]; n++, m += u[i + 1]) 
          // update weights
 ```
 
