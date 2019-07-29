@@ -117,7 +117,9 @@ for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i 
       for (int n = t; n < t + u[i+1]; n++, m+=u[i+1]) 
          // update weights
 ```
-   
+
+ At the end, the understanding of the reference is the key to work with massiv huge networks. 
+ 
 ![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
 
-At the end, the understanding of the reference is the key to work with massiv huge networks. 
+
