@@ -57,11 +57,11 @@ So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) 
 
 In pseudo it could look like this for FF:
 ```
->dnn = u.len // = 4 on the reference
+dnn = u.len // = 4 on the reference
 
->inputs = u[0] // = 3
+inputs = u[0] // = 3
 
->output = u[dnn] // = 2
+output = u[dnn] // = 2
 
 nns = sumUp(u) // size of the neurons is the sum of u[] = 3 + 5 + 5 + 5 + 2 = 20*
 
@@ -70,7 +70,6 @@ wnn = sumProducts(u) // size of weights = sum of the products of u = 3 * 5 + 5 *
 *the gradient, bias and netinput index is just the (nns-inputs), as example I added a bias for FF*
 
 ```
-
 for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1])  // layer
 
    for (int k = 0; k < u[i+1]; j++, k++) // neuron
