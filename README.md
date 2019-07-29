@@ -65,7 +65,7 @@ In pseudo it could look like this for FF:
 
 nns = sumUp(u) // size of the neurons is the sum of u[] = 3 + 5 + 5 + 5 + 2 = 20*
 
-wnn = sumProducts(u) // size of weights is the sum of the products from the layer 3 * 5 + 5 * 5 + 5 * 5 + 5 * 2 = 75*
+wnn = sumProducts(u) // size of weights = sum of the products of u = 3 * 5 + 5 * 5 + 5 * 5 + 5 * 2 = 75*
 ```
 *the gradient, bias and netinput index is just the (nns-inputs), as example I added a bias for FF*
 
@@ -90,14 +90,26 @@ for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i 
        neuron[j] = 0
 ```
 
+The output layer will be activated with softmax. One special treatment, but only for a neural networks, is only one calculation for the max value of the output layer for the cross entropy each run, because the other calculations multiplys with 0, so I let them out and no loop is needed.
 
+The hardest part is the backpropagation, here we go just backwards.
 
-
-Here is a visualisation of the process:
+Here is a visualisation of the whole process:
 
 [Perceptron Concept Visualisation](https://www.youtube.com/watch?v=jZgb3-W7BpQ)
 
-
 Hope that helps.
+
+First we check if we are on the output layer, then we calc the gradient with (target - output) and update the deltas for the weights of this gradient. If we done with the output, we calc the gradient for the hidden nerurons, and this process ist just the FF, but backwards.
+The loops do not look very attractive, thats true. Instead of the long loops we could use arrays for the steps, that looks sexier, but for the understanding it seems better to show the calc on their place.
+
+Before we finish we need one more step, the weight update. This is easy, the simple way is one loop.
+
+for (int m = 0; m < wnn; m++)
+   // update weights
+   
+Another nice way is to use the FF or BP as a dummy of the 3 loops, remove the calc and replace them in the n loop with the weight update. With this dummy its possible to update the layer with seperate learning rates, whats seems a nice finetune at the end, or do some other stuff over the neurons.   
    
 ![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
+
+At the end, the understanding of the reference is the key to work with massiv huge networks. 
