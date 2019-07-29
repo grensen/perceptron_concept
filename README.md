@@ -71,27 +71,26 @@ In pseudo it could look like this for FF:
 
 *every layer i in the network = 4*
 
->for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1]) 
+```
 
-*every activation neuron k in the network steps with u[i] = (5,5,5,2)*
+for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1])  // layer
 
->for (int k = 0; k < u[i+1]; j++, k++)
+   for (int k = 0; k < u[i+1]; j++, k++) // neuron
 
->net = bias[j-inputs]
+      net = bias[j-inputs]
 
-*every weight and n neuron in the network*
+      for (every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;t<t+u[i+1]; n++, m+=u[i+1]) // weight
 
->for (every input neuron n start with u[i] = steps: 3=3, 3+5=8, 8+5=13, 13+5=18;t<t+u[i+1]; n++, m+=u[i+1])
+         net += neuron[n] * weight[m]
 
->net += neuron[n] * weight[m]
+      if(net more then 0 (relu) or i is outputlayer (output for softmax))
 
->if(net more then 0 (relu) or i is outputlayer (output for softmax))
+       neuron[j] = net
 
->neuron[j] = net
+      else
 
->else
-
->neuron[j] = 0
+       neuron[j] = 0
+```
 
 Here is a visualisation of the process:
 
