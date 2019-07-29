@@ -104,11 +104,19 @@ First we check if we are on the output layer, then we calc the gradient with (ta
 The loops do not look very attractive, thats true. Instead of the long loops we could use arrays for the steps, that looks sexier, but for the understanding it seems better to show the calc on their place.
 
 Before we finish we need one more step, the weight update. This is easy, the simple way is one loop.
-
+```
 for (int m = 0; m < wnn; m++)
    // update weights
-   
+```
+
 Another nice way is to use the FF or BP as a dummy of the 3 loops, remove the calc and replace them in the n loop with the weight update. With this dummy its possible to update the layer with seperate learning rates, whats seems a nice finetune at the end, or do some other stuff over the neurons.   
+
+```
+for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1]) 
+   for (int k = 0; k < u[i+1]; j++, k++)
+      for (int n = t; n < t + u[i+1]; n++, m+=u[i+1]) 
+         // update weights
+```
    
 ![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
 
