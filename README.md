@@ -120,7 +120,7 @@ gs = gradient steps, here we start without the inputs, because on the FF we star
       {
           float gra = 0;
          //--- first check if output or hidden layer
-          if (i == dnn) // calc gradient with (t - o)
+          if (i == dnn) // calc output gradient with (t - o)
               gra = target[--ls] - neuron[j];
           else if(neuron[j] > 0) // calc the gradient for hidden with respect of the derivative for ReLU
               for (int n = gs + u[i + 1]; n > gs; n--, wg--)
