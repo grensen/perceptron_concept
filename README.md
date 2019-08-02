@@ -93,7 +93,34 @@ The output layer will be activated with softmax. One special treatment, but only
 
 The hardest part is the backpropagation, here we go just backwards.
 
-First we check if we are on the output layer, then we calc the gradient with (target - output) and update the deltas for the weights of this gradient. Thats the strongest "just in time" component in this concept, because we dont need more code and resources to handle this operation. If we done with the output, we calc the gradient for the hidden nerurons, and this process ist just the FF, but backwards.
+```
+  for (int i = dnn, j = nns - 1, ls = output, wd = wnn - 1, wg = wd, us = nns - output - 1, gs = nns - inputs - 1;
+      i != 0; i--, wd -= u[i + 1] * u[i + 0], us -= u[i], gs -= u[i + 1])
+     /*
+       lets describe the new ones:
+       ls = loss iterator with the size of the output neurons, thats what we need
+       wd = weight delta starts on the last index array position
+       wg = weight gradient = wd
+       us = neuron steps, we start on the last neuron of the last hidden-layer, because we need the product from neuron[n] * gra 
+       gs = gradient steps, here we start without the inputs, because on the FF we start activation on the first hidden neuron 
+     */
+      for (int k = 0; k != u[i]; k++, j--)
+      {
+          float gra = 0;
+         //--- first check if output or hidden layer
+          if (i == dnn) // calc gradient with (t - o)
+              gra = target[--ls] - neuron[j];
+          else if(neuron[j] > 0) // calc the gradient for hidden with respect of the derivative for ReLU
+              for (int n = gs + u[i + 1]; n > gs; n--, wg--)
+                  gra += weight[wg] * gradient[n];
+          else wg -= u[i + 1]; // substract the skipped iterations           
+          for (int n = us, w = wd - k; n > us - u[i - 1]; w -= u[i], n--)
+              delta[w] += gra * neuron[n]; // calcs the deltas from the currenct gradient
+          gradient[j - inputs] = gra;
+      }
+```
+
+First we check if we are on the output layer and than we calc the gradient with (target - output) and update the deltas for the weights of this gradient. Thats the strongest "just in time" component in this concept, because we dont need more code and resources to handle this operation. If we done with the output, we calc the gradient for the hidden nerurons, and this process ist just the FF, but backwards.
 The loops do not look very attractive, thats true. Instead of the long loops we could use arrays for the steps, that looks sexier, but for the understanding it seems better to show the calc on their place.
 
 Before we finish we need one more step, the weight update. This is easy, the simple way is one loop.
