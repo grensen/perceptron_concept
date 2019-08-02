@@ -56,6 +56,7 @@ Some termenology alert, a layer means normaly the connection between the input a
 So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) i3 = (5 * 2)) which results in 4 layer, 20 neurons and 75 weights.
 
 In pseudo it could look like this for FF:
+\n\n\n\n\n
 ```
 dnn = u.len - 1 // = 4 on the reference
 
