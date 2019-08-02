@@ -100,12 +100,14 @@ The hardest part is the backpropagation, here we go just backwards.
   for (int i = dnn, j = nns - 1, ls = output, wd = wnn - 1, wg = wd, us = nns - output - 1, gs = nns - inputs - 1;
       i != 0; i--, wd -= u[i + 1] * u[i + 0], us -= u[i], gs -= u[i + 1])
 ```
-       lets describe the new ones:
-       ls = loss iterator with the size of the output neurons, thats what we need
-       wd = weight delta starts on the last index array position
-       wg = weight gradient = wd
-       us = neuron steps, we start on the last neuron of the last hidden-layer, because we need the product from neuron[n] * gra 
-       gs = gradient steps, here we start without the inputs, because on the FF we start activation on the first hidden neuron 
+ 
+lets describe the new ones:
+ls = loss iterator with the size of the output neurons, thats what we need
+wd = weight delta starts on the last index array position
+wg = weight gradient = wd
+us = neuron steps, we start on the last neuron of the last hidden-layer, because we need the product from neuron[n] * gra 
+gs = gradient steps, here we start without the inputs, because on the FF we start activation on the first hidden neuron 
+
 ```
       for (int k = 0; k != u[i]; k++, j--)
       {
