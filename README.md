@@ -95,14 +95,8 @@ for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i 
 The output layer will be activated with softmax. One special treatment, but only for a neural networks, is only one calculation for the max value of the output layer for the cross entropy each run, because the other calculations multiplys with 0, so I let them out and no loop is needed.
 
 The hardest part is the backpropagation, here we go just backwards.
-
-```
-  for (int i = dnn, j = nns - 1, ls = output, wd = wnn - 1, wg = wd, us = nns - output - 1, gs = nns - inputs - 1;
-      i != 0; i--, wd -= u[i + 1] * u[i + 0], us -= u[i], gs -= u[i + 1])
-```
  
- 
-lets describe the new ones:
+for clarity:
 
 ls = loss iterator with the size of the output neurons, thats what we need
 
@@ -115,7 +109,10 @@ us = neuron steps, we start on the last neuron of the last hidden-layer, because
 gs = gradient steps, here we start without the inputs, because on the FF we start activation on the first hidden neuron 
 
 
+
 ```
+  for (int i = dnn, j = nns - 1, ls = output, wd = wnn - 1, wg = wd, us = nns - output - 1, gs = nns - inputs - 1;
+      i != 0; i--, wd -= u[i + 1] * u[i + 0], us -= u[i], gs -= u[i + 1])
       for (int k = 0; k != u[i]; k++, j--)
       {
           float gra = 0;
