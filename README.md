@@ -1,6 +1,7 @@
 # The Perceptron Concept (Or All Is A Perceptron Concept)
-# An efficent neural network concept for the C-Family
-# Supported language: C#, CPP, JAVA
+## An efficent neural network concept for the C-Family
+### Supported language: C#, CPP, JAVA
+
 
 The u[] array describes the network, I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
 
@@ -95,6 +96,8 @@ for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i 
 The output layer will be activated with softmax. One special treatment, but only for a neural networks, is only one calculation for the max value of the output layer for the cross entropy each run, because the other calculations multiplys with 0, so I let them out and no loop is needed.
 
 The hardest part is the backpropagation, here we go just backwards.
+
+**What does this mean exactly?**
  
 for clarity:
 
