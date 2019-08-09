@@ -83,11 +83,10 @@ def main():
         for i in range(dnn, 0, -1):
             for k in range(u[i]):
                 gra = 0.0
-                nj = neuron[j]
                 if i == dnn:
-                    gra = target[ls] - nj
+                    gra = target[ls] - neuron[j]
                     ls -= 1
-                elif nj > 0:
+                elif neuron[j] > 0:
                     for n in range(gs + u[i + 1], gs, -1):
                         gra += weight[wg] * gradient[n]
                         wg -= u[i + 1]
