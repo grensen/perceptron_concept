@@ -166,6 +166,6 @@ With a good understanding of the indices, its really easy to implement helpful t
 
 ### Warning!
 
-**The Python version is only for fun here, the code works 100 times slower than the other versions!**
+*The Python version is only for fun here, the code works hundred times slower than the other versions!*
 
 
