@@ -1,6 +1,6 @@
 # The Perceptron Concept (Or All Is A Perceptron Concept)
-## An efficent neural network concept for the C-Family
-### Supported language: C#, CPP, JAVA, MQL4
+# An efficent neural network concept for the C-Family
+# Supported language: C#, CPP, JAVA, MQL4
 
 
 The u[] array describes the network, I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
@@ -163,7 +163,8 @@ With a good understanding of the indices, its really easy to implement helpful t
 
 ![numberWeights](https://user-images.githubusercontent.com/53048236/61751317-3d88d780-ada8-11e9-9e50-9e1a95055e4d.png)
 
-#Warning!
+
+### Warning!
 
 **The Python version is only for fun here, the code works 100 times slower than the other versions!**
 
