@@ -1,12 +1,12 @@
 function main()
 {
-   console.log("running\n");
-         
-         let u = [3, 5, 5, 5, 2];
-         let learningRate    = 0.0067;
-         let bounceResRate   = 50.0;
-         let weightInitRange = 0.35;
-         let runs              = 10000;
+         console.log("\nrunning\n");       
+       
+	 let u                 = [784, 25, 25, 25, 10];
+         let learningRate      = 0.0067;
+         let bounceResRate     = 50.0;
+         let weightInitRange   = 0.35;
+         let runs              = 1000;
          let miniBatch         = 8;
          let networkInfoCheck  = 10; 
 	 
@@ -16,12 +16,16 @@ function main()
          for (let n = 0; n < dnn + 1; n++) nns += u[n]; // num of neurons
          for (let n = 1; n < dnn + 1; n++) wnn += u[n - 1] * u[n]; // num of weights
 
-         let neuron     = [nns];
+         let neuron   = [nns];
          let gradient = [nns - inputs];
          let weight   = [wnn];
          let delta    = [wnn];
          let target   = [output];
 
+	 let FS = require('fs');
+	 let MNISTimage = FS.readFileSync("train-images.idx3-ubyte", "binary");
+	 let MNISTlabel = FS.readFileSync("train-labels.idx1-ubyte", "binary");
+         
          // load input data...
          for (let n = 0, p = 314; n < wnn; n++)
              weight[n] = ((p = p * 2718 % 2718281) / (2718281.0 * Math.E * Math.PI * weightInitRange));
@@ -32,7 +36,13 @@ function main()
 
            //+----------- 1. MNIST as Inputs --------------------------------------+      
            // feed input data...
-            let targetNum = 0;
+	    for (let n = 0; n < inputs; n++)
+            {            
+             neuron[n] = neuron.push(MNISTimage [((x-1)*784) + n + 16]) / 255;
+            }   
+            let tmp = [];
+  	    tmp.push(MNISTlabel [(x-1) + 8]);
+            let targetNum = tmp;
             
            //+----------- 2. Feed Forward -----------------------------------------+            
             for (let i = 0, j = inputs, t = 0, w = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1])
