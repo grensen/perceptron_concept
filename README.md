@@ -44,12 +44,12 @@ And so I've explained the concept myself, ignore the math, here I was using (Out
 
 Let's focus on the green index on the Image, input, hidden and output neurons are in only one array, the neuron[], so the network uses one index for all neurons. And here we have to talk about the j index, thats not the whole index, because j is the activation index after the inputs and starts on the first neuron with index 3 on hidden layer 1. So lets talk about the gradient array in red, which starts with index 0 on the green index position 3, these is the index for the gradient[], but it's also the index for the bias[], or the netinput[] we dont need in this concept. 
 
-### Lets start to build our NN with the layers in the training cycle
+## Lets start to build our NN with the layers in the training cycle
 
 First we need to add our prepared input neurons like this:
 
 ```
-      for (int n = 0; n < inputs; ++n)
+      for (int n = 0; n < inputs; ++n) /
          // neuron[n] = insert the prepared inputs!
 ```
 Here we can do operations on the input layer, thats good to know.
@@ -59,29 +59,60 @@ After we got the input neurons we can calculate the FF, here we start just with 
 ```
       for (int i = 0, j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1])  // layer
       {
-         // calc the NN neurons and weights, bam...
+         // calc the NN neurons and weights etc, bam...
       }
 ```
 
-So j starts with the size of the input neurons, thats because we want to activate all neurons till we end with the activated output neuron 20 in array position 19 (neuron[19]) as seen in the picture above. Here t (i0=0, i1=3, i2=8, i3=13) saves the neuron steps, same with w (i0=0, i1=15, i2=40, i3=65), saves the weight steps.
+So j starts with the size of the input neurons, thats because we want to activate all neurons till we end with the activated output neuron 20 in array position 19 (neuron[19]) as seen in the picture above. Here t (i0=0, i1=3, i2=8, i3=13) saves the neuron steps and serves the n-sided neurons, same with w (i0=w=0, i1=w+3*5=15, i2=w+5*5=40, i3=w+5*2=65), saves the weight steps.
 
 Now the neurons!
 ```
-            for (int k = 0; k < u[i + 1]; k++, j++)
+      for i in layer
+      {
+            for (int k = 0; k < u[i + 1]; k++, j++) // neurons
             {
-                  // calc the neurons times the weights to get the netinput in the innerst loop n
-                  // after the n loop activate all hidden neurons and let the outputs pass like this:
+                  // 1. add bias to netinput
+                  float net = bias[j - inputs];
+                  // 2. calculate the inner n loop
+                  // n loop with calulations piep piep piep...
+                  // 3. after the n loop activate all hidden neurons and let the outputs pass like this:
                   neuron[j] = i == dnn - 1 ? net : net > 0 ? net : 0;
                   // j starts with inputs = 3 and end on the last output neuron[nns-1] = 19
-                  // k goes the steps seperate (5, 5, 5, 2) because u[] starts with u[i+1]=5, double bam!
-            }//--- k ends   
+                  // k goes the steps seperate (5, 5, 5, 2) because u[] starts with u[i+1]=5
+                  // so if the k loop is done, j ends with 3+5+5+5+2=20
+                  // the last operation in the k loop is to insert the netinput[16] add to neuron[19] of 
+                  // and after the loop j is 20, double bam!                 
+            }//--- k ends 
+            // u dont understand why j is 20 at the end? just add:
+            if(i==dnn-1)Print(j); // ;-)        
+      }
 ```
 
-Lets finish this easy loop ;)
+Lets finish this easy loops with the inner weight loop ;)
 
-```               
+``` 
+      for i in layer
+      {
+            for k in neurons
+            {     
+                  // n starts with 0 because on i0 t is 0 and the loop end is t + u[i] = 3
+                  // because the loop adds the products from the n-sided neuron[0, 1, 2] 
+                  // w + k, here k adds k+=1 after every k loop
+                  // thats because the weights for neuron[3], the first activated after the n loop
+                  // adds the n neurons with their weight to the k neuron in the j index, uff
+                  // but its easy, neuron[3] connects with weights 0, 5, 10 see picture
+                  // if k increments the first time, the next weights are w+k(1) = m=1, m=6, m=11 for neuron[4]  
+                  // we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=15 for neuron[7]
+                  // after the first layer is done, w starts on i1 with w=15
+                  //*
+                  
                   for (int n = t, m = w + k; n < t + u[i]; n++, m += u[i + 1])
                      net += neuron[n] * weight[m];  
+                  
+                  //*   
+                  // lets think about n again, n -> k means we need to add the complete n side for every k sided neuron
+            }
+       }
 ```
 
 
