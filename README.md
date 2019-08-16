@@ -48,7 +48,7 @@ Let's focus on the green index on the Image, input, hidden and output neurons ar
 
 With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a image with three pixels for the reference example.
 
-To realize the idea we need three loops, the outer i loop for the layer, then the middel k loop for every neuron we need to activate for our output (right sided k) operations, and the inner n loop for the input (left sided n) neurons and every weight, to calc the products we add to the net variable intead the netinput[] array after we leave the n loop.
+To realize the idea we need three loops, the outer i loop for the layer, then the middel k loop for every neuron we need to activate for our output (right sided k) operations, and the inner n loop for the input (left sided n) neurons and every weight, to calc the products we add to the net variable instead the netinput[] array after we leave the n loop.
 
 First we need to add our prepared input neurons like this:
 
@@ -67,7 +67,7 @@ After we got the input neurons we can calculate the FF, here we start just with 
       }
 ```
 
-So j starts with the size of the input neurons, thats because we want to activate all neurons till we end with the activated output neuron 20 in array position 19 (neuron[19]) as seen in the picture above. Here t (i0=0, i1=3, i2=8, i3=13) saves the neuron steps and serves the n-sided neurons, same with w (i0=w=0, i1=w+3*5=15, i2=w+5*5=40, i3=w+5*2=65), saves the weight steps.
+So j starts with the size of the input neurons, thats because we want to activate all neurons till we end with the activated output neuron 20 in array position 19 (neuron[19]) as seen in the picture above. Here t (t: i0=0, i1=3, i2=8, i3=13) saves the neuron steps and serves the n-sided neurons, same with w (w:i0=0, i1=15, i2=40, i3=65), saves the weight steps.
 
 Now the neurons!
 ```
