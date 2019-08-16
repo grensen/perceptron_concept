@@ -94,8 +94,8 @@ Now the neurons!
       }
 ```
 
-
-Lets finish this easy loops with the inner weight loop ;)
+Ehm, netinput[16]???, thats one of the clues of this concept, because we dont need a netinput array and take insteakd a fast efficency variable to sum up the products + the bias to the net variable. Thats massiv, the NN needs only 2 arrays and one variable instead of 3 arrays in the inner n loop.
+Lets finish this with the inner weight loop ;)
 
 
 ``` 
@@ -111,7 +111,7 @@ Lets finish this easy loops with the inner weight loop ;)
                   // we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=15 for neuron[7]
                   // after the first layer is done, w starts on i1 with w=15, weight[15] is the first weight on the next layer!
                   //*                  
-                  for (int n = t, m = w + k; n < t + u[i]; n++, m += u[i + 1])
+                  for (int n = t, m = w + k; n < t + u[i]; n++, m += u[i + 1]) // weights
                      net += neuron[n] * weight[m];                
                   //*   
                   // lets think about n again, n -> k means we need to add the complete n side for every k sided neuron
