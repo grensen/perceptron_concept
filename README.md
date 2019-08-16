@@ -53,7 +53,7 @@ To realize the idea we need three loops, the outer i loop for the layer, then th
 First we need to add our prepared input neurons like this:
 
 ```
-      for (int n = 0; n < inputs; ++n) /
+      for (int n = 0; n < inputs; ++n) 
          // neuron[n] = insert the prepared inputs!
 ```
 Here we can do operations on the input layer, thats good to know.
