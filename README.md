@@ -44,7 +44,7 @@ And so I've explained the concept myself, ignore the math, here I was using (Out
 
 Let's focus on the green index on the Image, input, hidden and output neurons are in only one array, the neuron[], so the network uses one index for all neurons. And here we have to talk about the j index, thats not the whole index, because j is the activation index after the inputs and starts on the first neuron with index 3 on hidden layer 1. So lets talk about the gradient array in red, which starts with index 0 on the green index position 3, these is the index for the gradient[], but it's also the index for the bias[], or the netinput[] we dont need in this concept. 
 
-###Lets start to build our NN with the layers in the training cycle
+### Lets start to build our NN with the layers in the training cycle
 
 First we need to add our prepared input neurons like this:
 
