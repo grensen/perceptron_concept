@@ -46,6 +46,10 @@ Let's focus on the green index on the Image, input, hidden and output neurons ar
 
 ## Lets start to build our NN with the layers in the training cycle
 
+With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a image with three pixels for the reference example.
+
+To realize the idea we need three loops, the outer i loop for the layer, then the middel k loop for every neuron we need to activate for our output (right sided k) operations, and the inner n loop for the input (left sided n) neurons and every weight, to calc the products we add to the net variable intead the netinput[] array after we leave the n loop.
+
 First we need to add our prepared input neurons like this:
 
 ```
@@ -59,7 +63,7 @@ After we got the input neurons we can calculate the FF, here we start just with 
 ```
       for (int i = 0, j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1])  // layer
       {
-         // calc the NN neurons and weights etc, bam...
+         // calc the NN loops with neurons, weights, etc, bam...
       }
 ```
 
@@ -76,7 +80,9 @@ Now the neurons!
                   // 2. calculate the inner n loop
                   // n loop with calulations piep piep piep...
                   // 3. after the n loop activate all hidden neurons and let the outputs pass like this:
-                  neuron[j] = i == dnn - 1 ? net : net > 0 ? net : 0;
+                  //*                  
+                  neuron[j] = i == dnn - 1 ? net : net > 0 ? net : 0;           
+                  //*
                   // j starts with inputs = 3 and end on the last output neuron[nns-1] = 19
                   // k goes the steps seperate (5, 5, 5, 2) because u[] starts with u[i+1]=5
                   // so if the k loop is done, j ends with 3+5+5+5+2=20
@@ -88,40 +94,30 @@ Now the neurons!
       }
 ```
 
+
 Lets finish this easy loops with the inner weight loop ;)
+
 
 ``` 
       for i in layer
       {
             for k in neurons
             {     
-                  // n starts with 0 because on i0 t is 0 and the loop end is t + u[i] = 3
-                  // because the loop adds the products from the n-sided neuron[0, 1, 2] 
-                  // w + k, here k adds k+=1 after every k loop
-                  // thats because the weights for neuron[3], the first activated after the n loop
-                  // adds the n neurons with their weight to the k neuron in the j index, uff
-                  // but its easy, neuron[3] connects with weights 0, 5, 10 see picture
+                  // 1. n starts with 0 because on i0 t is 0 and the loop end is t + u[i] = 3
+                  // to run the the n-sided neuron[0, 1, 2] for every k neuron
+                  // 2. m = w + k, here k adds k+=1 after every k loop, w add the steps after every i loop
+                  // the weights m=0, m=5, m=10 connects to neuron[3] see the picture
                   // if k increments the first time, the next weights are w+k(1) = m=1, m=6, m=11 for neuron[4]  
                   // we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=15 for neuron[7]
-                  // after the first layer is done, w starts on i1 with w=15
-                  //*
-                  
+                  // after the first layer is done, w starts on i1 with w=15, weight[15] is the first weight on the next layer!
+                  //*                  
                   for (int n = t, m = w + k; n < t + u[i]; n++, m += u[i + 1])
-                     net += neuron[n] * weight[m];  
-                  
+                     net += neuron[n] * weight[m];                
                   //*   
                   // lets think about n again, n -> k means we need to add the complete n side for every k sided neuron
             }
        }
 ```
-
-
-To realize the idea we need three loops, the outer i loop for the layer, then the middel k loop for every neuron we need to activate for our output (right sided k) operations, and the inner n loop for the input (left sided n) neurons and every weight, to calc the products we add to the net variable intead the netinput[] array after we leave the n loop.
-
-Ok ok, step by step, because the steps are the key. Here we watch the NN u[] = {3,5,5,5,2} again, the first step goes from 0 to 3 and represents the input neurons we add to k, the k loop is u[i + 1], because we start with i = 0, and add to the next layer, so its i + 1 with 5 neurons in this case.
-
-With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a image with three pixels for the reference example.
-Think about, we add the left side n first with the 3 input neurons with index 0, 1, 2 to the right side on our first output neuron[3] k, till we activate the last neuron on the layer h1 from 3 to 7 in the k loop, then if i = 1 h1 represent our inputs (left sided n), and h2 our outputs (right sided k) till we reach the final output layer, here we do not activate the output neurons and just let them pass.
 
 Keep in  mind, n goes to k!
 
@@ -133,17 +129,17 @@ So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) 
 In pseudo it could look like this for FF:
 
 ```
-dnn = u.len - 1 // = 4 on the reference
+dnn = u.len - 1 // = 4 on the reference 3,5,5,5,2
 
 inputs = u[0] // = 3
 
 output = u[dnn] // = 2
 
-nns = sumUp(u) // size of the neurons is the sum of u[] = 3 + 5 + 5 + 5 + 2 = 20*
+nns = sumUp(u) // size of the neurons is the sum of u[] = 3 + 5 + 5 + 5 + 2 = 20
 
-wnn = sumProducts(u) // size of weights = sum of the products of u = 3 * 5 + 5 * 5 + 5 * 5 + 5 * 2 = 75*
+wnn = sumProducts(u) // size of weights = sum of the products of u = 3 * 5 + 5 * 5 + 5 * 5 + 5 * 2 = 75
 ```
-*the gradient, bias and netinput index is just the (nns-inputs), as example I added a bias for FF*
+*the gradient, bias and netinput index is just the (nns-inputs) or (j-inputs), as example I added a bias for FF*
 
 ```
 for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i - 1])  // layer
