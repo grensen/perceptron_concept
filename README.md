@@ -124,13 +124,17 @@ Now the neurons!
             }//--- k ends     
 ```
 
-j starts with inputs = 3 and end on the last output neuron[nns-1] = 19,
+j starts with inputs = 3 and end on the last output neuron[nns-1] = 19.
+
 k goes the steps seperate (5, 5, 5, 2) because u[] starts with u[i+1]=5,
-so if the k loop is done, j ends with 3+5+5+5+2=20, 
-the last operation in the k loop is to insert the netinput[16] add to neuron[19] of 
+so if the k loop is done, j ends with 3+5+5+5+2=20.
+
+The last operation in the k loop is to insert the netinput[16] add to neuron[19] of 
 and after the loop j is 20, double bam! 
 
-Ehm, netinput[16]???, thats one of the clues of this concept, because we dont need a netinput array and take instead a fast efficency variable to sum up the products + the bias to the net variable. Thats massiv, the NN needs only 2 arrays and one variable instead of 3 arrays in the inner n loop.
+Ehm, netinput[16]???, thats one of the clues of this concept, because we dont need a netinput array and take instead a fast efficency variable to sum up the products + the bias to the net variable. 
+
+Thats massiv, the NN needs only 2 arrays and one variable instead of 3 arrays in the inner n loop.
 Lets finish this with the inner weight loop ;)
 
 
@@ -141,14 +145,17 @@ Lets finish this with the inner weight loop ;)
                      // sum the products to the netinput
                      net += neuron[n] * weight[m];                
 ```
-n starts with 0 because on i0 t is 0 and the loop end is t + u[i] = 3, 
-to run the the n-sided neuron[0, 1, 2] for every k neuron.
+n starts with 0 because on i0 t is 0 and the loop end is t + u[i] = 3, to run the the n-sided neuron[0, 1, 2] for every k neuron.
+
 m = w + k, here k adds k+=1 after every k loop, w add the steps after every i loop,
 the weights m=0, m=5, m=10 connects to neuron[3] see the picture above.
+
 If k increments the first time, the next weights are w+k(1) = m=1, m=6, m=11 for neuron[4],
 we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=15 for neuron[7].
+
 After the first layer is done, w starts on i1 with w=15, weight[15] is the first weight on the next layer!
 Lets think about n again, n -> k means we need to add the complete n side for every k sided neuron.
+
 Keep in  mind, n goes to k!
 
 Some termenology alert, a layer means normaly the connection between the input and their outputs (input * output = layer), but it's also common to name the layer as input, hidden or output. Correctly I would name it connection layer, which need 2 parts.
