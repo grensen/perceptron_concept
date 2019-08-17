@@ -3,12 +3,34 @@
 # Supported languages: C#, CPP, JAVA, MQL4
 
 
-The u[] array describes the network, I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
+In most articles, the process itself is usually briefly explained.
+
+Here I will try to simplify everything as well as possible in order to explain the non-changeable, very complex parts as simply as possible. 
+
+I express the whole process as A (inputs) + B (hidden connected weights) = C (outputs).
+
+We want to make a predictions, no matter what kind, we give A to the NN in form of input neurons, calculate plus B and get C as output neurons.
+Our goal is a perfect prediction by correcting the value of B by computing C - A = new B after every new input A and take the new B for the next prediction.
+A + new B = better C prediction. 
+The C is our classification result, and can contain any number of classifiers.
+With real numbers, it may be easier to understand.
+We calculate 4 + (-2) = 2, but our goal for C was a prediction of 1.
+So we correct the B and take the new B for the next prediction. 
+We tell the NN C = 1 now, because thats the result we want with C if A = 4, and calculate C - A = new B.
+And next C we calculate with 4 + (-3) = 1, so the NN makes better predictions if the input is A = 4.
+
+The weights stand for B and are our constants in the NN, we change B a bit to create better C predictions.
+
+In the algorithm, A ist the start and C the end. 
+Here I want to take the focus on the implementation. 
+
+
+The u[] array describes the neural network (NN), I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
 
 The demo NN_001 for each language uses a { 784, 25, 25, 25, 10 } NN and as inputs the MNIST data comes in.
 To make everything comparable, the network works with pseudo random values. 
-Rectified linear units (ReLU) are used as an activation function,
-and the output neurons are activated with softmax and cross entropy loss.
+Rectified linear units (ReLU) are used as an activation function with a optimized implementation,
+the output neurons are activated with softmax and cross entropy to evaluate the model performance.
 The quick demo also supports batch, mini-batch and online-trainig / stochastic gradient descent (SGD). 
 
 The weight initialization is a pseudo random function with known numbers. 
@@ -20,12 +42,12 @@ The method in the trivial form is simpel, if a delta^2 breach the limit, the net
 
 With the perceptron concept its possible to use only one array for every neuron. Every data will be updated just in time.
 The biggest step to understand the concept in addition to the understanding of how a perceptron works, 
-is to understand why the j index need to be initialized with the size of the input neurons.
+is to understand why the j index need to be initialized with the size of the input neurons, remember that.
 
 Feed Forward (FF) and Backpropagation (BP) treat the current neuron in FF and the gradient in the BP excatly in the same way, forward and backward. This means FF needs the products of their neurons times their weights and optionally the bias, then we got the netinput and the neuron can be activated.
 The same thing with the gradient, here the step is a little bit trickier, because the gradient calculation treats the output neurons with (target - output) in a different way as the hidden neurons, where the gradient is the sum of the products from the gradients on the layer before times their own weights.
 
-On the picture below you can see the identical results in C#, CPP and JAVA. JAVA was tested with Eclipse, C#  and CPP with Visual Studio 2017.
+On the picture below you can see the identical results in C#, CPP and JAVA. JAVA was tested with Eclipse, C# and CPP with Visual Studio 2017.
 
 ![alt text](https://user-images.githubusercontent.com/53048236/61723001-99813b00-ad6b-11e9-81ea-aaa683a98b4f.png)
 
@@ -42,7 +64,10 @@ And so I've explained the concept myself, ignore the math, here I was using (Out
 
 ![WP_20190423_00_35_17_Pro](https://user-images.githubusercontent.com/53048236/61755635-ca3b9180-adb8-11e9-99a6-adfce47950a5.jpg)
 
-Let's focus on the green index on the Image, input, hidden and output neurons are in only one array, the neuron[], so the network uses one index for all neurons. And here we have to talk about the j index, thats not the whole index, because j is the activation index after the inputs and starts on the first neuron with index 3 on hidden layer 1. So lets talk about the gradient array in red, which starts with index 0 on the green index position 3, these is the index for the gradient[], but it's also the index for the bias[], or the netinput[] we dont need in this concept. 
+Let's focus on the green index on the Image, input, hidden and output neurons are in only one array, the neuron[], so the network uses one index for all neurons, the i loop seperates the layer for input, hidden or output neurons. And here we have to talk about the j index, thats not the whole index, because j is the activation index after the inputs and starts on the first neuron with index 3 on hidden layer 1. So lets talk about the gradient array in red, which starts with index 0 on the green index position 3, these is the index for the gradient[], but it's also the index for the bias[], or the netinput[] we dont need in this concept. 
+
+It may not be obvious, but once you understand the FF process, you have understood the BP process for calculating the gradient. 
+To become aware of this, you only have to turn the BP process 180 degrees. The initialization of the inputs and the difference of the error are the start for FF and BP, and the product summation for Netinput and Gradient are reflected. If you rotate the image 180 degrees, the end is the beginning and the plus becomes minus. Three Inputs for FF becomes 2 outputs for BP. From FF 1 [0] to 20 [19] goes from 20 [19] to 4 [3] with BP. 
 
 ## Lets start to build our NN with the layers in the training cycle
 
