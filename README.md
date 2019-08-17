@@ -50,7 +50,16 @@ On the picture below you can see the identical results in C#, CPP and JAVA. JAVA
 
 ![alt text](https://user-images.githubusercontent.com/53048236/61723001-99813b00-ad6b-11e9-81ea-aaa683a98b4f.png)
 
-The concept consists of a heart that is the same in every language. The other part is language specific.
+This article assumes you have at least intermediate programming skills and a basic idea of neural networks and machine learning(ML), but doesn’t assume you know anything about the perceptron concept. The demo code contains only the essetials to keep the main ideas as clear as possible and the size of the code small. 
+
+To better understand deep neural networks, I can recommend the work of Professor James D. McCaffrey. His blog is the first address with Google and stack overflow, which I inform myself.
+His articles written in different languages (C#, Python, JavaScript, R) gave me a good understanding of the very complex systems.
+
+In addition, he has published short but really good books that help a lot in understanding of ML.
+
+His life's work has taught me almost everything that's important in ML, and I learn more every day.
+
+The perceptron concept consists of a heart that is the same in every language. The other part is language specific.
 More specifically, the whole training code, except for the function of the filestream, is the same in all languages.
 Also arrays, math functions, print functions and some include stuff need special attention for every language, but that was it.
 The complicated algorithms can be easily ported.
