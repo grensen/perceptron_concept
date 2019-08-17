@@ -23,6 +23,10 @@ The next calculation will be with 4 + (-3) = 1, so the NN makes better predictio
 The weights stand for B and are our constants in the NN, we change B a bit to create better C predictions.
 This idea of the process should help to understand the core of this topic, the implementation of a deep neural network, so lets go deeper.
 
+## *okay, but why it named perceptron concept?*
+
+// under construction...
+
 
 The u[] array describes the neural network (NN), I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
 
