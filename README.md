@@ -9,20 +9,19 @@ Here I will try to simplify everything as well as possible in order to explain t
 
 I express the whole process as A (inputs) + B (hidden connected weights) = C (outputs).
 
-We want to make a predictions, no matter what kind, we give A to the NN in form of input neurons, calculate plus B and get C as output neurons.
-Our goal is a perfect prediction by correcting the value of B by computing C - A = new B after every new input A and take the new B for the next prediction.
-A + new B = better C prediction. 
+We want to make predictions, no matter what kind, we give A with any data to the NN in form of input neurons, calculate plus B and get C as output neurons. The C we calculate would replace with the C we want.
+Our goal is a perfect prediction by correcting the value of B by computing (our wanted C) - A = (new B),
+thats what we do after every new input A and take the new B for the next prediction.
+A + (new B) = (better C prediction). 
 The C is our classification result, and can contain any number of classifiers.
+
 With real numbers, it may be easier to understand.
-We calculate 4 + (-2) = 2, but our goal for C was a prediction of 1.
-So we correct the B and take the new B for the next prediction. 
-We tell the NN C = 1 now, because thats the result we want with C if A = 4, and calculate C - A = new B.
-And next C we calculate with 4 + (-3) = 1, so the NN makes better predictions if the input is A = 4.
+We calculate 4 + (-2) = 2, but our goal for C was a prediction of 1 in this case.
+So we correct the B, we tell the NN C = 1 now, because thats the result we want with C if A = 4.
+The next calculation will be with 4 + (-3) = 1, so the NN makes better predictions if the input is A = 4.
 
 The weights stand for B and are our constants in the NN, we change B a bit to create better C predictions.
-
-In the algorithm, A ist the start and C the end. 
-Here I want to take the focus on the implementation. 
+This idea of the process should help to understand the core of this topic, the implementation of a deep neural network, lets go deeper.
 
 
 The u[] array describes the neural network (NN), I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
