@@ -104,61 +104,51 @@ So j starts with the size of the input neurons, thats because we want to activat
 
 Now the neurons!
 ```
-      for i in layer
-      {
+      for i in layers
             for (int k = 0; k < u[i + 1]; k++, j++) // neurons
             {
                   // 1. add bias to netinput
                   float net = bias[j - inputs];
+                   
                   // 2. calculate the inner n loop
-                  // n loop with calulations piep piep piep...
-                  // 3. after the n loop activate all hidden neurons and let the outputs pass like this:
-                  //*                  
-                  neuron[j] = i == dnn - 1 ? net : net > 0 ? net : 0;           
-                  //*
-                  // j starts with inputs = 3 and end on the last output neuron[nns-1] = 19
-                  // k goes the steps seperate (5, 5, 5, 2) because u[] starts with u[i+1]=5
-                  // so if the k loop is done, j ends with 3+5+5+5+2=20
-                  // the last operation in the k loop is to insert the netinput[16] add to neuron[19] of 
-                  // and after the loop j is 20, double bam!                 
-            }//--- k ends 
-            // u dont understand why j is 20 at the end? just add:
-            if(i==dnn-1)Print(j); // ;-)        
-      }
+                  
+                  // 3. after the n loop activate all hidden neurons and let the outputs pass like this:                
+                  neuron[j] = i == dnn - 1 ? net : net > 0 ? net : 0;                                       
+            }//--- k ends     
 ```
 
-Ehm, netinput[16]???, thats one of the clues of this concept, because we dont need a netinput array and take insteakd a fast efficency variable to sum up the products + the bias to the net variable. Thats massiv, the NN needs only 2 arrays and one variable instead of 3 arrays in the inner n loop.
+j starts with inputs = 3 and end on the last output neuron[nns-1] = 19,
+k goes the steps seperate (5, 5, 5, 2) because u[] starts with u[i+1]=5,
+so if the k loop is done, j ends with 3+5+5+5+2=20, 
+the last operation in the k loop is to insert the netinput[16] add to neuron[19] of 
+and after the loop j is 20, double bam! 
+
+Ehm, netinput[16]???, thats one of the clues of this concept, because we dont need a netinput array and take instead a fast efficency variable to sum up the products + the bias to the net variable. Thats massiv, the NN needs only 2 arrays and one variable instead of 3 arrays in the inner n loop.
 Lets finish this with the inner weight loop ;)
 
 
 ``` 
       for i in layer
-      {
-            for k in neurons
-            {     
-                  // 1. n starts with 0 because on i0 t is 0 and the loop end is t + u[i] = 3
-                  // to run the the n-sided neuron[0, 1, 2] for every k neuron
-                  // 2. m = w + k, here k adds k+=1 after every k loop, w add the steps after every i loop
-                  // the weights m=0, m=5, m=10 connects to neuron[3] see the picture
-                  // if k increments the first time, the next weights are w+k(1) = m=1, m=6, m=11 for neuron[4]  
-                  // we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=15 for neuron[7]
-                  // after the first layer is done, w starts on i1 with w=15, weight[15] is the first weight on the next layer!
-                  //*                  
+            for k in neurons                    
                   for (int n = t, m = w + k; n < t + u[i]; n++, m += u[i + 1]) // weights
+                     // sum the products to the netinput
                      net += neuron[n] * weight[m];                
-                  //*   
-                  // lets think about n again, n -> k means we need to add the complete n side for every k sided neuron
-            }
-       }
 ```
-
+n starts with 0 because on i0 t is 0 and the loop end is t + u[i] = 3, 
+to run the the n-sided neuron[0, 1, 2] for every k neuron.
+m = w + k, here k adds k+=1 after every k loop, w add the steps after every i loop,
+the weights m=0, m=5, m=10 connects to neuron[3] see the picture above.
+If k increments the first time, the next weights are w+k(1) = m=1, m=6, m=11 for neuron[4],
+we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=15 for neuron[7].
+After the first layer is done, w starts on i1 with w=15, weight[15] is the first weight on the next layer!
+Lets think about n again, n -> k means we need to add the complete n side for every k sided neuron.
 Keep in  mind, n goes to k!
 
 Some termenology alert, a layer means normaly the connection between the input and their outputs (input * output = layer), but it's also common to name the layer as input, hidden or output. Correctly I would name it connection layer, which need 2 parts.
 So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) i3 = (5 * 2)) which results in 4 layer, 20 neurons and 75 weights.
 
 
-
+The result of the three loops could look like this:
 In pseudo it could look like this for FF:
 
 ```
@@ -181,11 +171,11 @@ for (int j = inputs, w = 0, t = 0; i < dnn; i++, t += u[i - 1], w += u[i] * u[i 
 
       net = bias[j-inputs]
 
-      for (int n = t; n < t + u[i + 1]; n++, m += u[i + 1]) // weight
+      for (int n = t, m = w + k; n < t + u[i + 1]; n++, m += u[i + 1]) // weight
 
          net += neuron[n] * weight[m]
 
-      if(net more then 0 (relu) or i is outputlayer (output for softmax))
+      if(net more then 0 (relu) or i is outputlayer (output for softmax with maxtrick))
 
        neuron[j] = net
 
@@ -202,17 +192,15 @@ The hardest part is the backpropagation, here we go just backwards.
  
 for clarity:
 
-ls = loss iterator with the size of the output neurons, thats what we need
+ls = loss iterator with the size of the output neurons, thats what we need = (output - 1)
 
-wd = weight delta starts on the last index array position
+wd = weight delta starts on the last index array position = (wnn - 1)
 
 wg = weight gradient = wd
 
-us = neuron steps, we start on the last neuron of the last hidden-layer, because we need the product from neuron[n] * gra 
+us = neuron steps, we start on the last neuron of the last hidden-layer = (nns - output - 1) 
 
-gs = gradient steps, here we start without the inputs, because on the FF we start activation on the first hidden neuron 
-
-
+gs = gradient steps = (nns - inputs - 1) because on the FF we start activation on the first hidden neuron 
 
 ```
   for (int i = dnn, j = nns - 1, ls = output, wd = wnn - 1, wg = wd, us = nns - output - 1, gs = nns - inputs - 1;
@@ -233,7 +221,7 @@ gs = gradient steps, here we start without the inputs, because on the FF we star
       }
 ```
 
-First we check if we are on the output layer and than we calc the gradient with (target - output) and update the deltas for the weights of this gradient. Thats the strongest "just in time" component in this concept, because we dont need more code and resources to handle this operation. If we done with the output, we calc the gradient for the hidden nerurons, and this process ist just the FF, but backwards.
+First we check if we are on the output layer and than we calc the gradient with (target - output) and update the deltas for the weights of this gradient. Thats the strongest "just in time" component in this concept, because we dont need more code and resources to handle this operation. If we done with the output, we calc the gradient for the hidden nerurons, and this process ist just the FF with the net variable, but backwards.
 The loops do not look very attractive, thats true. Instead of the long loops we could use arrays for the steps, that looks sexier, but for the understanding it seems better to show the calc on their place.
 
 Before we finish we need one more step, the weight update. This is easy, the simple way is one loop.
