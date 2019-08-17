@@ -17,11 +17,11 @@ The C is our classification result, and can contain any number of classifiers.
 
 With real numbers, it may be easier to understand.
 We calculate 4 + (-2) = 2, but our goal for C was a prediction of 1 in this case.
-So we correct the B, we tell the NN C = 1 now, because thats the result we want with C if A = 4.
+So we correct the B with 1 - 4 = -3 because we tell the NN C = 1 now.
 The next calculation will be with 4 + (-3) = 1, so the NN makes better predictions if the input is A = 4.
 
 The weights stand for B and are our constants in the NN, we change B a bit to create better C predictions.
-This idea of the process should help to understand the core of this topic, the implementation of a deep neural network, lets go deeper.
+This idea of the process should help to understand the core of this topic, the implementation of a deep neural network, so lets go deeper.
 
 
 The u[] array describes the neural network (NN), I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
