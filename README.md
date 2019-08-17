@@ -25,7 +25,10 @@ This idea of the process should help to understand the core of this topic, the i
 
 ## *okay, but why it named perceptron concept?*
 
-// under construction...
+Lets create the simpelest perceptron, with two inputs and one output. 
+We calculate neuron1 * weight1 + neuron2 * weight2 = output1. So we can add more input neruons, 
+or we calculate more output neurons neuron1 * weight1 + neuron2 * weight2 = output2.
+After the layer is calculated and the output neurons can act as input neurons for new output neurons if their is a next layer. So the prrocess is nearly the same all the time. That is why the concept bears this name. 
 
 
 The u[] array describes the neural network (NN), I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
