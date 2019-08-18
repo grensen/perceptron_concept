@@ -25,6 +25,7 @@ This idea of the process should help to understand the core of this topic, the i
 ## *okay, but why it named perceptron concept?*
 
 McCaffrey wrotes:
+
 ["A perceptron is code that models the behavior of a single biological neuron. A neural network can be thought of as a collection of perceptrons."](https://jamesmccaffrey.wordpress.com/2013/04/17/classification-using-perceptrons/)
 
 Lets create the simpelest perceptron, with two inputs and one output. 
