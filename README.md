@@ -9,9 +9,8 @@ Here I will try to simplify everything as well as possible in order to explain t
 
 I express the whole process as A (inputs) + B (hidden connected weights) = C (outputs).
 
-We want to make predictions, no matter what kind, we give A with any data to the NN in form of input neurons, calculate plus B and get C as output neurons. The C we calculate would replace with the C we want.
-Our goal is a perfect prediction by correcting the value of B by computing (our wanted C) - A = (new B),
-thats what we do after every new input A and take the new B for the next prediction.
+We want to make predictions, no matter what kind, we give A with any data to the NN in form of input neurons, calculate plus B and get C as output neurons. Our goal is a perfect prediction by correcting the value of B by computing (our wanted C) - A = (new B),
+thats what we do after every new input A and take the new B to calculate the next prediction.
 A + (new B) = (better C prediction). 
 The C is our classification result, and can contain any number of classifiers.
 
@@ -25,10 +24,13 @@ This idea of the process should help to understand the core of this topic, the i
 
 ## *okay, but why it named perceptron concept?*
 
+McCaffrey wrotes:
+["A perceptron is code that models the behavior of a single biological neuron. A neural network can be thought of as a collection of perceptrons."](https://jamesmccaffrey.wordpress.com/2013/04/17/classification-using-perceptrons/)
+
 Lets create the simpelest perceptron, with two inputs and one output. 
 We calculate neuron1 * weight1 + neuron2 * weight2 = output1. So we can add more input neruons, 
 or we calculate more output neurons neuron1 * weight3 + neuron2 * weight4 = output2.
-After the layer is calculated the output neurons can act as input neurons for new output neurons if their is a next layer. So the process is nearly the same all the time. That is why the concept bears this name.  
+After the layer is calculated the output neurons can act as input neurons for new output neurons if their is a next layer. So the process is nearly the same all the time. The algorithm treat every neuron as a perceptron. That is why the concept bears this name.  
 
 
 The u[] array describes the neural network (NN), I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
