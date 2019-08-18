@@ -27,7 +27,7 @@ This idea of the process should help to understand the core of this topic, the i
 
 ## *okay, but why it named perceptron concept?*
 
-McCaffrey wrotes:
+James D. McCaffrey wrotes:
 
 ["A perceptron is code that models the behavior of a single biological neuron. A neural network can be thought of as a collection of perceptrons."](https://jamesmccaffrey.wordpress.com/2013/04/17/classification-using-perceptrons/)
 
@@ -157,7 +157,7 @@ m = w + k, here k adds k+=1 after every k loop, w add the steps after every i lo
 the weights m=0, m=5, m=10 connects to neuron[3] see the picture above.
 
 If k increments the first time, the next weights are w+k(1) = m=1, m=6, m=11 for neuron[4],
-we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=15 for neuron[7].
+we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=14 for neuron[7].
 
 After the first layer is done, w starts on i1 with w=15, weight[15] is the first weight on the next layer!
 Lets think about n again, n -> k means we need to add the complete n side for every k sided neuron.
