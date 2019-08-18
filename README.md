@@ -163,7 +163,6 @@ So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) 
 
 
 The result of the three loops could look like this:
-In pseudo it could look like this for FF:
 
 ```
 dnn = u.len - 1 // = 4 on the reference 3,5,5,5,2
