@@ -10,6 +10,7 @@ Here I will try to simplify everything as well as possible in order to explain t
 I express the whole process as A (inputs) + B (hidden connected weights) = C (outputs).
 
 We want to make predictions, no matter what kind, we give A with any data to the NN in form of input neurons, calculate plus B and get C as output neurons. 
+
 Our goal is a perfect prediction by correcting the value of B by computing (our wanted C) - A = (new B),
 thats what we do after every new input A and take the new B to calculate the next prediction.
 
