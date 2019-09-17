@@ -23,7 +23,7 @@ So we correct the B with 1 - 4 = -3 because we tell the NN C = 1 now.
 The next calculation will be with 4 + (-3) = 1, so the NN makes better predictions if the input is A = 4.
 
 The weights stand for B and are our constants in the NN, we change B a bit to create better C predictions.
-This idea of the process should help to understand the core of this topic, the implementation of a deep neural network, so lets go deeper.
+This idea of the process should help to understand the core of this topic, the implementation of a deep neural network or also called a multilayer perceptron (MLP), so lets go deeper.
 
 ## *okay, but why it named perceptron concept?*
 
@@ -36,10 +36,9 @@ We calculate neuron1 * weight1 + neuron2 * weight2 = output1. So we can add more
 or we calculate more output neurons neuron1 * weight3 + neuron2 * weight4 = output2.
 After the layer is calculated the output neurons can act as input neurons for new output neurons if their is a next layer. So the process is nearly the same all the time. The algorithm treat every neuron as a perceptron. That is why the concept bears this name.  
 
-
 The u[] array describes the neural network (NN), I take u[] because it got a good position on the keyboard, the reference to learn the concept will be the { 3, 5, 5, 5, 2 } deep neural network. 
 
-The demo NN_001 for each language uses a { 784, 25, 25, 25, 10 } NN and as inputs the MNIST data comes in.
+The demo NN_001 for each language used a { 784, 25, 25, 25, 10 } NN and as inputs the MNIST data comes in.
 To make everything comparable, the network works with pseudo random values. 
 Rectified linear units (ReLU) are used as an activation function with a optimized implementation,
 the output neurons are activated with softmax and cross entropy to evaluate the model performance.
@@ -47,10 +46,22 @@ The quick demo also supports batch, mini-batch and online-trainig / stochastic g
 
 The weight initialization is a pseudo random function with known numbers. 
 "weightInitRange" set the range of the weights, 0.314 seems a nice start value, 
-so the weight init works only with one hyperparameter, thus.
+so the weight init works only with one hyperparameter.
 
-A special feature ist the bounce restriction method.
-The method in the trivial form is simpel, if a delta^2 breach the limit, the network waits till the delta is cooling down before the NN updates the weight again, but the weight itself continues to work in the network all the time. This makes the NN much more robust.
+Here is a lot more to say, the reason for this weight initialization is not the performence, this is absolutly not the best way, but it's a good way to keep everthing more comparable. 
+If you want a better way, take a look at the glorot initialization: 
+["The Five Neural Network Weight Initialization Algorithms"](https://jamesmccaffrey.wordpress.com/2018/12/06/the-five-neural-network-weight-initialization-algorithms/)
+
+
+
+A special feature in this concept is the bounce restriction method.
+The method in the trivial form is simpel, if a delta^2 breach the limit, the network waits till the delta is cooling down before the NN updates the weight again, but the weight itself continues to work in the network all the time. This makes the NN much more robust. 
+
+This line:
+```
+delta[m] *= 0.5f;
+```
+works as cheap momentum.
 
 With the perceptron concept its possible to use only one array for every neuron. Every data will be updated just in time.
 The biggest step to understand the concept in addition to the understanding of how a perceptron works, 
@@ -85,16 +96,18 @@ And so I've explained the concept myself, ignore the math, here I was using (Out
 
 ![WP_20190423_00_35_17_Pro](https://user-images.githubusercontent.com/53048236/61755635-ca3b9180-adb8-11e9-99a6-adfce47950a5.jpg)
 
-Let's focus on the green index on the Image, input, hidden and output neurons are in only one array, the neuron[], so the network uses one index for all neurons, the i loop seperates the layer for input, hidden or output neurons. And here we have to talk about the j index, thats not the whole index, because j is the activation index after the inputs and starts on the first neuron with index 3 on hidden layer 1. So lets talk about the gradient array in red, which starts with index 0 on the green index position 3, these is the index for the gradient[], but it's also the index for the bias[], or the netinput[] we dont need in this concept. 
+Let's focus on the green index, input, hidden and output neurons are in only one array, the neuron[], so the network used one index for all neurons, the i loop seperates the layer for input, hidden(1...n) or output neurons. And here we have to talk about the j index, thats not the whole index, because j is the activation index after the inputs and starts on the first neuron with index 3 on hidden layer 1. So lets talk about the gradient array in red, which starts with index 0 on the green index position 3, that is the index for the gradient[], but it's also the index for the bias[], or the netinput[] we dont need in this concept. 
+
+The process I show here is not very accurate, but thats ok, think about the left side as the FF operation, and the right side should show the BP in red with the components we need from the FF process to calculate the delta's in gold for the new weight. 
 
 It may not be obvious, but once you understand the FF process, you have understood the BP process for calculating the gradient. 
-To become aware of this, you only have to turn the BP process 180 degrees. The initialization of the inputs and the difference of the error are the start for FF and BP, and the product summation for Netinput and Gradient are reflected. If you rotate the image 180 degrees, the end is the beginning and the plus becomes minus. Three Inputs for FF becomes 2 outputs for BP. From FF 1 [0] to 20 [19] goes from 20 [19] to 4 [3] with BP. 
+To become aware of this, you only have to turn the BP process 180 degrees. The initialization of the inputs and the difference of the error are the start for FF and BP, and the product summation for netinput and gradient are reflected. If you rotate the image 180 degrees, the end is the beginning and the plus becomes minus. Three Inputs for FF becomes 2 outputs for BP. From FF 4 [3] to 20 [19] goes from 20 [19] to 4 [3] with BP. 
 
 ## Lets start to build our NN with the layers in the training cycle
 
 With MNIST the input would be 784 for each pixel, but the reference works only with 3 inputs, so we just imagine a image with three pixels for the reference example.
 
-To realize the idea we need three loops, the outer i loop for the layer, then the middel k loop for every neuron we need to activate for our output (right sided k) operations, and the inner n loop for the input (left sided n) neurons and every weight, to calc the products we add to the net variable instead the netinput[] array after we leave the n loop.
+To realize the idea we need three loops, the outer i loop for the layer, the middel k loop for every neuron we need to activate for our output (right sided k) operations, and the inner n loop for the input (left sided n) neurons and every weight, to calc the products we add to the net variable instead the netinput[] array after we leave the n loop.
 
 First we need to add our prepared input neurons like this:
 
@@ -135,14 +148,12 @@ j starts with inputs = 3 and end on the last output neuron[nns-1] = 19.
 k goes the steps seperate (5, 5, 5, 2) because u[] starts with u[i+1]=5,
 so if the k loop is done, j ends with 3+5+5+5+2=20.
 
-The last operation in the k loop is to insert the netinput[16] add to neuron[19] of 
-and after the loop j is 20, double bam! 
+The last operation in the k loop is to add the netinput[16] to neuron[19].
 
 Ehm, netinput[16]???, thats one of the clues of this concept, because we dont need a netinput array and take instead a fast efficency variable to sum up the products + the bias to the net variable. 
 
 Thats massiv, the NN needs only 2 arrays and one variable instead of 3 arrays in the inner n loop.
 Lets finish this with the inner weight loop ;)
-
 
 ``` 
       for i in layer
@@ -151,7 +162,7 @@ Lets finish this with the inner weight loop ;)
                      // sum the products to the netinput
                      net += neuron[n] * weight[m];                
 ```
-n starts with 0 because on i0 t is 0 and the loop end is t + u[i] = 3, to run the the n-sided neuron[0, 1, 2] for every k neuron.
+n starts with 0 because on i0 t is 0 and the loop end on i0 is t + u[i] = 3, to run the the n-sided neuron[0, 1, 2] for every k neuron.
 
 m = w + k, here k adds k+=1 after every k loop, w add the steps after every i loop,
 the weights m=0, m=5, m=10 connects to neuron[3] see the picture above.
@@ -162,10 +173,10 @@ we end on the first layer with the last 3 weights with w+k(4) = m=4, m=9, m=14 f
 After the first layer is done, w starts on i1 with w=15, weight[15] is the first weight on the next layer!
 Lets think about n again, n -> k means we need to add the complete n side for every k sided neuron.
 
-Keep in  mind, n goes to k!
+Keep in mind, n goes to k!
 
 Some termenology alert, a layer means normaly the connection between the input and their outputs (input * output = layer), but it's also common to name the layer as input, hidden or output. Correctly I would name it connection layer, which need 2 parts.
-So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) i3 = (5 * 2)) which results in 4 layer, 20 neurons and 75 weights.
+So in the i loop a layer means (u layer: i0 = (3 * 5) i1 = (5 * 5) i2 = (5 * 5) i3 = (5 * 2)) which results in this case in 4 layer, 20 neurons and 75 weights.
 
 
 The result of the three loops could look like this:
@@ -233,7 +244,7 @@ gs = gradient steps = (nns - inputs - 1) because on the FF we start activation o
           else if(neuron[j] > 0) // calc the gradient for hidden with respect of the derivative for ReLU
               for (int n = gs + u[i + 1]; n > gs; n--, wg--)
                   gra += weight[wg] * gradient[n];
-          else wg -= u[i + 1]; // substract the skipped iterations           
+          else wg -= u[i + 1]; // substract the skipped iterations          
           for (int n = us, w = wd - k; n > us - u[i - 1]; w -= u[i], n--)
               delta[w] += gra * neuron[n]; // calcs the deltas from the currenct gradient
           gradient[j - inputs] = gra;
