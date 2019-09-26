@@ -57,7 +57,7 @@ The code could look like this:
       for(int i=0, w=0; i < dnn; i++, w+=u[i]*u[i+1])
       { 
        float sd = (float)sqrt(6.0f / (u[i] + u[i+1]));
-       for(int m=w ; m < w+u[i]*u[i+1]; m++)
+       for(int m=w; m < w+u[i]*u[i+1]; m++)
          weight[m] = rnd.nextFloat(-sd, sd);
       }  
 ```
