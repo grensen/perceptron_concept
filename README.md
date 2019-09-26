@@ -52,16 +52,23 @@ Here is a lot more to say, the reason for this weight initialization is not the 
 If you want a better way, take a look at the glorot initialization: 
 ["The Five Neural Network Weight Initialization Algorithms"](https://jamesmccaffrey.wordpress.com/2018/12/06/the-five-neural-network-weight-initialization-algorithms/)
 
-
+The code could look like this:
+```
+      for(int i=0;i<dnn;i++)
+      { 
+       float sd = (float)sqrt(6.0f / (u[i] + u[i+1]));
+       for(int m=wst[i];m<wst[i+1];m++)
+         weight[m] = rnd.nextFloat(-sd, sd);
+      }  
+```
 
 A special feature in this concept is the bounce restriction method.
 The method in the trivial form is simpel, if a delta^2 breach the limit, the network waits till the delta is cooling down before the NN updates the weight again, but the weight itself continues to work in the network all the time. This makes the NN much more robust. 
 
-This line:
+This line works as cheap momentum:
 ```
 delta[m] *= 0.5f;
 ```
-works as cheap momentum.
 
 With the perceptron concept its possible to use only one array for every neuron. Every data will be updated just in time.
 The biggest step to understand the concept in addition to the understanding of how a perceptron works, 
